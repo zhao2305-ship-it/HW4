@@ -1,104 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="utf-8">
-  <title>HW4 – OpenGL Basics</title>
-  <style>
-    body {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 20px;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      line-height: 1.5;
-    }
-    h1, h2, h3 {
-      margin-top: 1.2em;
-    }
-    img {
-      max-width: 100%;
-      height: auto;
-      border: 1px solid #ccc;
-      margin: 6px 0 16px;
-    }
-    code {
-      background: #f5f5f5;
-      padding: 2px 4px;
-      border-radius: 3px;
-      font-size: 0.95em;
-    }
-  </style>
+<meta charset="utf-8">
+<title>HW4 - OpenGL Basics</title>
+<style>
+  body {
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+  }
+  img {
+    max-width: 100%;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+  }
+</style>
 </head>
+
 <body>
 
 <h1>HW4 – OpenGL Basics</h1>
-<p>This page contains my results for Homework 4.</p>
+
+<p>This page shows my work for HW4. I ran all the demos and took screenshots, and then answered the questions.</p>
 
 <hr>
 
 <h2>A. Demo Screenshots</h2>
 
 <h3>1. TriangleColored</h3>
-<p>This demo shows a simple colored triangle.</p>
-<img src="tri-color.png" alt="TriangleColored demo">
+<p>This demo draws a simple colored triangle.</p>
+<img src="tri-color.png">
 
 <h3>2. Cube3D</h3>
-<p>This demo renders a rotating 3D cube.</p>
-<img src="Cube3D.png" alt="Cube3D demo">
+<p>This one shows a rotating 3D cube with a perspective view.</p>
+<img src="Cube3D.png">
 
 <h3>3. CubeLit</h3>
-<p>This cube has basic lighting.</p>
-<img src="Cubelit.png" alt="CubeLit demo">
+<p>This cube has basic lighting added, so you can see bright and dark sides.</p>
+<img src="Cubelit.png">
 
 <h3>4. ModelLoad</h3>
-<p>This is the model loaded from the models folder.</p>
-<img src="modelload.png" alt="ModelLoad demo">
+<p>This is the model loaded from the models folder (default cube).</p>
+<img src="modelload.png">
 
 <hr>
 
 <h2>B. Questions</h2>
 
-<h3>Q1. What happens if I remove <code>glEnable(GL_DEPTH_TEST)</code>?</h3>
+<h3>Q1. What happens if I remove the depth test?</h3>
 <p>
-Without the depth test, OpenGL draws faces only in the order they are rendered.
-Back faces may appear in front, and the cube looks incorrect because the depth
-relationships are not handled.
+If I remove the depth test, OpenGL stops checking which surface is closer.
+Faces are drawn only in drawing order.  
+Because of that, the cube looks wrong: some back faces show up in front.
 </p>
 
-<h3>Q2. Exit when the Q key is pressed. What did I change?</h3>
-<p>I added this code to the event loop:</p>
-<pre><code>if (windowEvent.type == SDL_EVENT_KEY_UP &&
-    windowEvent.key.key == SDLK_q) {
-    quit = true;
-}</code></pre>
+<h3>Q2. Make the program exit when pressing Q. What did I change?</h3>
+<p>
+I added one more key check in the event loop, so when the program sees the Q key,
+it sets the quit flag to true. Pressing ESC or Q now closes the window.
+</p>
 
 <h3>Q3. Make the light come from below in CubeLit.</h3>
 <p>
-I changed the light direction in the fragment shader:
+I changed the light direction so the Y value became negative instead of positive.
+This makes the light shine upward instead of downward.
 </p>
-<pre><code>const vec3 lightDir = vec3(0, -1, 1);</code></pre>
 
-<h3>Q4. Custom triangle model</h3>
-<p>I created a file named <code>triangle.txt</code> with one large triangle.</p>
+<h3>Q4. Create a triangle model and load it.</h3>
+<p>
+I made a new file called <b>triangle.txt</b>.  
+It has one big triangle. The format matches the cube model:  
+8 floats per vertex (position, UV, normal).
+</p>
 
-<pre><code>24
+<p>Contents of triangle.txt:</p>
+
+<pre>
+24
 0.0  1.0  0.0   0.0 1.0   1.0 0.0 0.0
 0.0 -1.0 -1.0   0.0 0.0   1.0 0.0 0.0
 0.0 -1.0  1.0   1.0 0.0   1.0 0.0 0.0
-</code></pre>
+</pre>
 
 <p>
-Then I changed the model file path in <code>ModelLoad.cpp</code> to:
+Then I changed the file name in ModelLoad.cpp from <i>cube.txt</i> to <i>triangle.txt</i>.
+After rebuilding, the program shows the large triangle.
 </p>
-<pre><code>std::string file_name = "models/triangle.txt";</code></pre>
 
 <hr>
 
 <h2>Summary</h2>
 <p>
-In this homework I practiced building simple OpenGL programs.
-I worked with depth testing, lighting, keyboard input,
-and loading models from files.  
-It helped me understand the basic OpenGL pipeline better.
+In this homework I practiced running basic OpenGL demos using SDL3.
+I tried several small programs, changed a few things like the light direction
+and the key inputs, and also loaded my own model.  
+Overall, this assignment helped me get more comfortable with how the OpenGL pipeline works.
 </p>
 
 </body>
