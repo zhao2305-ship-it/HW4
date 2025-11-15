@@ -31,76 +31,75 @@
 <body>
 
 <h1>HW4 – OpenGL Basics</h1>
-
-<p>
-This page contains my results for Homework 4.  
-All demos are based on the SDL3 + OpenGL starter code.
-</p>
+<p>This page contains my results for Homework 4.</p>
 
 <hr>
 
 <h2>A. Demo Screenshots</h2>
 
 <h3>1. TriangleColored</h3>
-<p>
-This demo shows a simple colored triangle rendered with OpenGL.
-</p>
-<!-- 把 triangle 的截图文件名改成你自己的 -->
-<img src="trianglecolored.png" alt="TriangleColored demo screenshot">
+<p>This demo shows a simple colored triangle.</p>
+<img src="tri-color.png" alt="TriangleColored demo">
 
 <h3>2. Cube3D</h3>
-<p>
-This demo renders a rotating 3D cube with a perspective camera.  
-Depth testing is enabled so faces are hidden correctly.
-</p>
-<img src="cube3d.png" alt="Cube3D demo screenshot">
+<p>This demo renders a rotating 3D cube.</p>
+<img src="Cube3D.png" alt="Cube3D demo">
 
 <h3>3. CubeLit</h3>
-<p>
-This cube demo adds basic lighting.  
-The cube shows light and shadow based on the normal and light direction.
-</p>
-<img src="cubelit.png" alt="CubeLit demo screenshot">
+<p>This cube has basic lighting.</p>
+<img src="Cubelit.png" alt="CubeLit demo">
 
-<h3>4. ModelLoad – default cube model</h3>
-<p>
-First I loaded the default cube model from the <code>models</code> folder.
-</p>
-<img src="modelload_cube.png" alt="ModelLoad cube screenshot">
-
-<h3>4 (extra). ModelLoad – custom triangle model</h3>
-<p>
-Then I loaded my own large triangle model file.
-</p>
-<img src="modelload_triangle.png" alt="ModelLoad triangle screenshot">
+<h3>4. ModelLoad</h3>
+<p>This is the model loaded from the models folder.</p>
+<img src="modelload.png" alt="ModelLoad demo">
 
 <hr>
 
 <h2>B. Questions</h2>
 
-<h3>Q1. What happens if I remove <code>glEnable(GL_DEPTH_TEST)</code> in Cube3D?</h3>
+<h3>Q1. What happens if I remove <code>glEnable(GL_DEPTH_TEST)</code>?</h3>
 <p>
-When the depth test is removed, OpenGL no longer checks which fragment is closer
-to the camera. Faces are drawn only in the order they are rendered.
-As a result, some back faces may appear in front of nearer faces,
-and the cube looks wrong and flat because the occlusion is incorrect.
+Without the depth test, OpenGL draws faces only in the order they are rendered.
+Back faces may appear in front, and the cube looks incorrect because the depth
+relationships are not handled.
 </p>
 
-<h3>Q2. Exit when the “Q” key is pressed. What did I change?</h3>
-<p>
-In the SDL event loop I added an extra key check for the Q key:
-</p>
-<pre><code>if (windowEvent.type == SDL_EVENT_KEY_UP &amp;&amp;
+<h3>Q2. Exit when the Q key is pressed. What did I change?</h3>
+<p>I added this code to the event loop:</p>
+<pre><code>if (windowEvent.type == SDL_EVENT_KEY_UP &&
     windowEvent.key.key == SDLK_q) {
     quit = true;
 }</code></pre>
+
+<h3>Q3. Make the light come from below in CubeLit.</h3>
 <p>
-Now the program exits when I press either Esc or Q.
+I changed the light direction in the fragment shader:
+</p>
+<pre><code>const vec3 lightDir = vec3(0, -1, 1);</code></pre>
+
+<h3>Q4. Custom triangle model</h3>
+<p>I created a file named <code>triangle.txt</code> with one large triangle.</p>
+
+<pre><code>24
+0.0  1.0  0.0   0.0 1.0   1.0 0.0 0.0
+0.0 -1.0 -1.0   0.0 0.0   1.0 0.0 0.0
+0.0 -1.0  1.0   1.0 0.0   1.0 0.0 0.0
+</code></pre>
+
+<p>
+Then I changed the model file path in <code>ModelLoad.cpp</code> to:
+</p>
+<pre><code>std::string file_name = "models/triangle.txt";</code></pre>
+
+<hr>
+
+<h2>Summary</h2>
+<p>
+In this homework I practiced building simple OpenGL programs.
+I worked with depth testing, lighting, keyboard input,
+and loading models from files.  
+It helped me understand the basic OpenGL pipeline better.
 </p>
 
-<h3>Q3. Change CubeLit so the light comes from below. What did I change?</h3>
-<p>
-In the fragment shader of <code>CubeLit.cpp</code> I changed the light direction.
-Originally it was:
-</p>
-<pre><code>const vec3 lightDir =
+</body>
+</html>
